@@ -37,18 +37,51 @@ class Notes extends React.Component{
           });
       })
       .catch((error) => {
-        console.log('Request failed', error);
+        console.log('Post request failed', error);
         this.setState({error})
       });
   }
   
-  renderRow(rowData, sec, i){
+  deleteRow(rowID, userInfo) {
+    console.log('delete row', rowID);
+    Api.deleteNote(userInfo.login, rowID)
+      .then((data) => {
+        Api.getNotes(userInfo.login)
+          .then((data) => {
+            this.setState({
+              dataSource: this.ds.cloneWithRows(data)
+            })
+          });
+      })
+      .catch((error) => {
+        console.log('Delete request failed', error);
+        this.setState({error})
+      });
+  }
+  
+  renderRowData(rowData, secID, rowID){
     return (
       <View>
         <View style={styles.rowContainer}>
-          <Text> {sec} - {i} - {rowData} </Text>
+          <Text> {rowID} - {rowData} </Text>
         </View>
-        <Separator />
+      </View>
+    )
+  }
+  
+  renderRowDelete(rowID, userInfo) {
+    return (
+      <View>
+        <View style={styles.rowContainer}>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={() => this.deleteRow(rowID, userInfo)}
+            underlayColor="#88D4F5">
+            <Text style={styles.buttonText}> 
+              Delete 
+            </Text>
+          </TouchableHighlight>
+        </View>
       </View>
     )
   }
@@ -77,10 +110,16 @@ class Notes extends React.Component{
   render(){
     return (
       <View style={styles.container}>
-          <ListView
-            dataSource={this.state.dataSource}
-            renderRow={this.renderRow}
-            renderHeader={() => <Badge userInfo={this.props.userInfo}/>} />
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(rowData, secID, rowID) => 
+            <View>
+              {this.renderRowData(rowData, secID, rowID)}
+              {this.renderRowDelete(rowID, this.props.userInfo)}
+            </View>}
+          renderHeader={() => <Badge userInfo={this.props.userInfo}/>}
+          renderSeparator={(secID, rowID) => <Separator key={`${secID}-${rowID}`}/>}
+        />
         {this.editor()}
       </View>
     )
