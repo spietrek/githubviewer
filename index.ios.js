@@ -15,7 +15,7 @@ class GitHub extends Component {
         titleTextColor='#FFF'
         style={styles.container}
         initialRoute={{
-          title: 'GitHub Viewer',
+          title: 'github viewer',
           component: Main
         }}
       />
