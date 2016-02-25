@@ -21,7 +21,7 @@ class Repositories extends Component {
     let userInfo = this.props.userInfo;
     let repos = this.props.repos;
     let list = repos.map((item, index) => {
-      let desc = repos[index].description ? <Text style={styles.description}> {repos[index].description} </Text> : <View />;
+      let desc = repos[index].description ? <Text style={styles.description} numberOfLines={1}> {repos[index].description} </Text> : <View />;
       return (
         <View key={index}>
           <View style={styles.rowContainer}>

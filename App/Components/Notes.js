@@ -1,5 +1,5 @@
 import React, {
-  Component, ScrollView, View, Text, TextInput, ListView, TouchableHighlight, StyleSheet
+  Component, ScrollView, View, Text, ActionSheetIOS, TextInput, ListView, TouchableHighlight, StyleSheet
 } from 'react-native';
 import Badge from './Badge';
 import Separator from './Helpers/Separator';
@@ -24,6 +24,7 @@ class Notes extends React.Component{
   
   handleSubmit(){
     let note = this.state.note;
+    if (note === '') return;
     this.setState({
       note: ''
     });
@@ -43,52 +44,59 @@ class Notes extends React.Component{
   }
   
   deleteRow(rowID, userInfo) {
-    console.log('delete row', rowID);
-    Api.deleteNote(userInfo.login, rowID)
-      .then((data) => {
-        Api.getNotes(userInfo.login)
+    const BUTTONS = [
+      'Delete Note',
+      'Cancel',
+    ];
+    const DESTRUCTIVE_INDEX = 0;
+    const CANCEL_INDEX = 1;
+    ActionSheetIOS.showActionSheetWithOptions({
+      options: BUTTONS,
+      cancelButtonIndex: CANCEL_INDEX,
+      destructiveButtonIndex: DESTRUCTIVE_INDEX
+    },
+    (buttonIndex) => {
+      if (buttonIndex === 0) {
+        Api.deleteNote(userInfo.login, rowID)
           .then((data) => {
-            this.setState({
-              dataSource: this.ds.cloneWithRows(data)
-            })
+            Api.getNotes(userInfo.login)
+              .then((data) => {
+                this.setState({
+                  dataSource: this.ds.cloneWithRows(data)
+                })
+              });
+          })
+          .catch((error) => {
+            console.log('Delete request failed', error);
+            this.setState({error})
           });
-      })
-      .catch((error) => {
-        console.log('Delete request failed', error);
-        this.setState({error})
-      });
-  }
+      }
+    });
+   }
   
-  renderRowData(rowData, secID, rowID){
+  renderRow(rowData, secID, rowID, userInfo){
+    /* beautify ignore:start */
     return (
-      <View>
-        <View style={styles.rowContainer}>
-          <Text> {rowID} - {rowData} </Text>
-        </View>
-      </View>
+      <View style={styles.dataContainer}>
+        <Text numberOfLines={1}
+          style={styles.dataText}> {rowData} </Text>
+        <TouchableHighlight
+          style={styles.deleteButton}
+          onPress={() => this.deleteRow(rowID, userInfo)}
+          underlayColor="#F2F2F2">
+          <Text style={styles.redButtonText}> 
+            X 
+          </Text>
+        </TouchableHighlight>
+    </View>
     )
-  }
-  
-  renderRowDelete(rowID, userInfo) {
-    return (
-      <View>
-        <View style={styles.rowContainer}>
-          <TouchableHighlight
-            style={styles.button}
-            onPress={() => this.deleteRow(rowID, userInfo)}
-            underlayColor="#88D4F5">
-            <Text style={styles.buttonText}> 
-              Delete 
-            </Text>
-          </TouchableHighlight>
-        </View>
-      </View>
-    )
+    /* beautify ignore:end */
   }
   
   editor(){
+    /* beautify ignore:start */
     return (
-      <View style={styles.footerContainer}>
+      <View style={styles.editorContainer}>
         <TextInput
           style={styles.searchInput}
           value={this.state.note}
@@ -105,24 +113,30 @@ class Notes extends React.Component{
         </TouchableHighlight>
       </View>
     )
+    /* beautify ignore:end */
   }
   
   render(){
+    /* beautify ignore:start */
     return (
       <View style={styles.container}>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={(rowData, secID, rowID) => 
             <View>
-              {this.renderRowData(rowData, secID, rowID)}
-              {this.renderRowDelete(rowID, this.props.userInfo)}
+              {this.renderRow(rowData, secID, rowID, this.props.userInfo)}
             </View>}
-          renderHeader={() => <Badge userInfo={this.props.userInfo}/>}
+          renderHeader={() => 
+            <View>
+              <Badge userInfo={this.props.userInfo}/>
+              {this.editor()}
+            </View>
+          }
           renderSeparator={(secID, rowID) => <Separator key={`${secID}-${rowID}`}/>}
         />
-        {this.editor()}
       </View>
     )
+    /* beautify ignore:end */
   }
 };
 
@@ -140,27 +154,47 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white'
   },
+  redButtonText: {
+    fontSize: 18,
+    color: 'red',
+    fontWeight: 'bold'
+  },
   button: {
-    height: 60,
+    height: 50,
     backgroundColor: '#48BBEC',
     flex: 3,
     alignItems: 'center',
     justifyContent: 'center'
   },
   searchInput: {
-    height: 60,
+    height: 50,
     padding: 10,
-    fontSize: 18,
+    fontSize: 16,
     color: '#111',
-    flex: 10
+    flex: 8
   },
   rowContainer: {
     padding: 10,
   },
-  footerContainer: {
+  editorContainer: {
     backgroundColor: '#E3E3E3',
     alignItems: 'center',
     flexDirection: 'row'
+  },
+  dataContainer: {
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  dataText: {
+    margin: 10,
+    fontSize: 16,
+    flex: 12
+  },
+  deleteButton: {
+    width: 25,
+    margin: 10,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 
