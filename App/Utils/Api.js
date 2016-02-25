@@ -21,8 +21,14 @@ var Api = {
       method: 'post',
       body: JSON.stringify(note)
     }).then((res) => res.json());
+  },
+  deleteNote(username, rowID){
+    username = username.toLowerCase().trim();
+    var url = `https://smp-github-react.firebaseio.com/${username}/${rowID}.json`;
+    return fetch(url, {
+      method: 'delete'
+    }).then((res) => res.json());
   }
 };
-
 
 module.exports = Api;

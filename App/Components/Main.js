@@ -77,7 +77,7 @@ class Main extends Component {
             SEARCH
           </Text>
         </TouchableHighlight>
-        <ActivityIndicatorIOS animating={this.state.isLoading} color='#111' size="large"/>
+        <ActivityIndicatorIOS animating={this.state.isLoading} color='#FFF' size="large"/>
         {showErr}
       </View>
     )
