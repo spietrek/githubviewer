@@ -1,6 +1,7 @@
 import React, {
   Component, View, Text, StyleSheet, ScrollView
 } from 'react-native';
+import NavigationBar from 'react-native-navbar';
 import Badge from './Badge';
 import Separator from './Helpers/Separator';
 
@@ -29,11 +30,38 @@ class Profile extends Component {
         )
       }
     });
+    
+    const titleConfig = {
+      title: 'Profile',
+      tintColor: '#FFF'
+    };
+ 
+    const leftButtonConfig = {
+      title: 'Back',
+      tintColor: '#48BBEC',
+      handler: () => this.props.navigator.pop(),
+    };
+
+    const statusBarConfig = {
+      hidden: false,
+      showAnimation: 'fade',
+      hideAnimation: 'fade',
+      style: 'light-content'
+    };
+    
     return (
-      <ScrollView style={styles.container}>
-        <Badge userInfo={userInfo}/>
-        {list}
-      </ScrollView>
+      <View style={styles.container}>
+        <NavigationBar
+            tintColor='#444444'
+            title={titleConfig}
+            leftButton={leftButtonConfig}
+            statusBar={statusBarConfig}
+          />            
+        <ScrollView style={styles.scrollContainer}>
+          <Badge userInfo={userInfo}/>
+          {list}
+        </ScrollView>
+      </View>
     )
     /* beautify ignore:end */
   }
@@ -41,6 +69,9 @@ class Profile extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  scrollContainer: {
     flex: 1
   },
   buttonText: {

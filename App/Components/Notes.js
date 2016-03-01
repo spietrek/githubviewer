@@ -1,6 +1,7 @@
 import React, {
   Component, ScrollView, View, Text, ActionSheetIOS, TextInput, ListView, TouchableHighlight, StyleSheet
 } from 'react-native';
+import NavigationBar from 'react-native-navbar';
 import Badge from './Badge';
 import Separator from './Helpers/Separator';
 import Api from '../Utils/Api';
@@ -118,22 +119,48 @@ class Notes extends React.Component{
   
   render(){
     /* beautify ignore:start */
+    const titleConfig = {
+      title: 'Profile',
+      tintColor: '#FFF'
+    };
+ 
+    const leftButtonConfig = {
+      title: 'Back',
+      tintColor: '#48BBEC',      
+      handler: () => this.props.navigator.pop(),
+    };
+
+    const statusBarConfig = {
+      hidden: false,
+      showAnimation: 'fade',
+      hideAnimation: 'fade',
+      style: 'light-content'
+    };
+    
     return (
       <View style={styles.container}>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={(rowData, secID, rowID) => 
-            <View>
-              {this.renderRow(rowData, secID, rowID, this.props.userInfo)}
-            </View>}
-          renderHeader={() => 
-            <View>
-              <Badge userInfo={this.props.userInfo}/>
-              {this.editor()}
-            </View>
-          }
-          renderSeparator={(secID, rowID) => <Separator key={`${secID}-${rowID}`}/>}
-        />
+        <NavigationBar
+          tintColor='#444444'
+          title={titleConfig}
+          leftButton={leftButtonConfig}
+          statusBar={statusBarConfig}
+        />            
+        <View style={styles.viewContainer}>
+          <ListView
+            dataSource={this.state.dataSource}
+            renderRow={(rowData, secID, rowID) => 
+              <View>
+                {this.renderRow(rowData, secID, rowID, this.props.userInfo)}
+              </View>}
+            renderHeader={() => 
+              <View>
+                <Badge userInfo={this.props.userInfo}/>
+                {this.editor()}
+              </View>
+            }
+            renderSeparator={(secID, rowID) => <Separator key={`${secID}-${rowID}`}/>}
+          />
+        </View>
       </View>
     )
     /* beautify ignore:end */
@@ -147,6 +174,9 @@ Notes.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  viewContainer: {
     flex: 1,
     flexDirection: 'column',
   },

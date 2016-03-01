@@ -1,6 +1,7 @@
 import React, {
   Component, Text, View, StyleSheet, Image, TouchableHighlight
 } from 'react-native';
+import NavigationBar from 'react-native-navbar';
 import Profile from './Profile';
 import Repositories from './Repositories';
 import Notes from './Notes';
@@ -29,7 +30,6 @@ class Dashboard extends Component {
   gotoProfile() {
     this.props.navigator.push({
       component: Profile,
-      title: 'Profile',
       passProps: {
         userInfo: this.props.userInfo
       }
@@ -41,7 +41,6 @@ class Dashboard extends Component {
       .then((res) => {
         this.props.navigator.push({
           component: Repositories,
-          title: 'Repos',
           passProps: {
             userInfo: this.props.userInfo,
             repos: res
@@ -64,39 +63,65 @@ class Dashboard extends Component {
         });
       });
   };
-
+  
   render() {
     /* beautify ignore:start */
+    const titleConfig = {
+      title: this.props.userInfo.name || 'Select an Option',
+      tintColor: '#FFF'
+    };
+ 
+    const leftButtonConfig = {
+      title: 'Back',
+      tintColor: '#48BBEC',
+      handler: () => this.props.navigator.pop(),
+    };
+
+    const statusBarConfig = {
+      hidden: false,
+      showAnimation: 'fade',
+      hideAnimation: 'fade',
+      style: 'light-content'
+    };
+    
     return (
       <View style={styles.container}>
-        <Image
-          source={{uri: this.props.userInfo.avatar_url}}
-          style={styles.image}
+        <NavigationBar
+          tintColor='#444444'
+          title={titleConfig}
+          leftButton={leftButtonConfig}
+          statusBar={statusBarConfig}
         />
-        <TouchableHighlight
-          onPress={this.gotoProfile.bind(this)}
-          style={this.makeBackground(0)}
-          underlayColor='#14aaeb'>
-          <Text style={styles.buttonText}>
-            View Profile
-          </Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={this.gotoRepos.bind(this)}
-          style={this.makeBackground(1)}
-          underlayColor='#e62e00'>
-          <Text style={styles.buttonText}>
-            View Repos
-          </Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={this.gotoNotes.bind(this)}
-          style={this.makeBackground(2)}
-          underlayColor='#425ff0'>
-          <Text style={styles.buttonText}>
-            View Notes
-          </Text>
-        </TouchableHighlight>
+        <View style={styles.viewContainer}>
+          <Image
+            source={{uri: this.props.userInfo.avatar_url}}
+            style={styles.image}
+          />
+          <TouchableHighlight
+            onPress={this.gotoProfile.bind(this)}
+            style={this.makeBackground(0)}
+            underlayColor='#14aaeb'>
+            <Text style={styles.buttonText}>
+              View Profile
+            </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={this.gotoRepos.bind(this)}
+            style={this.makeBackground(1)}
+            underlayColor='#e62e00'>
+            <Text style={styles.buttonText}>
+              View Repos
+            </Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={this.gotoNotes.bind(this)}
+            style={this.makeBackground(2)}
+            underlayColor='#425ff0'>
+            <Text style={styles.buttonText}>
+              View Notes
+            </Text>
+          </TouchableHighlight>
+        </View>
       </View>
     );
     /* beautify ignore:end */
@@ -109,8 +134,10 @@ Dashboard.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 65
+    flex: 1
+  }, 
+  viewContainer: {
+    flex: 1
   },
   image: {
     height: 350
