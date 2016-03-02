@@ -37,7 +37,7 @@ class Profile extends Component {
     };
  
     const leftButtonConfig = {
-      title: 'Back',
+      title: '< Back',
       tintColor: '#48BBEC',
       handler: () => this.props.navigator.pop(),
     };
@@ -69,10 +69,12 @@ class Profile extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#333333'
   },
   scrollContainer: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#FFFFFF'
   },
   buttonText: {
     fontSize: 18,

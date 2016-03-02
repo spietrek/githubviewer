@@ -4,13 +4,12 @@ import React, {
 import NavigationBar from 'react-native-navbar';
 import Badge from './Badge';
 import Separator from './Helpers/Separator';
-import Web_View from './Helpers/WebView';
+import Web_View from './WebView';
 
 class Repositories extends Component {
   openPage(url){
     this.props.navigator.push({
      component: Web_View,
-     title: 'Repo',
      passProps: {
        url: url
      }
@@ -45,7 +44,7 @@ class Repositories extends Component {
     };
  
     const leftButtonConfig = {
-      title: 'Back',
+      title: '< Back',
       tintColor: '#48BBEC',      
       handler: () => this.props.navigator.pop(),
     };
@@ -82,7 +81,8 @@ Repositories.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#FFFFFF'
   },
   scrollContainer: {
     flex: 1

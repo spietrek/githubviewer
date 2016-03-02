@@ -53,10 +53,10 @@ class Main extends Component {
     /* beautify ignore:start */
     return(
       <TextInput
-          style={styles.searchInput}
-          value={this.state.username}
-          autoCapitalize='none'
-          onChange={this.handleChange.bind(this)}
+        style={styles.searchInput}
+        value={this.state.username}
+        autoCapitalize='none'
+        onChange={this.handleChange.bind(this)}
       />
     )
     /* beautify ignore:end */

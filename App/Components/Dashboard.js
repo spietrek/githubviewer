@@ -72,7 +72,7 @@ class Dashboard extends Component {
     };
  
     const leftButtonConfig = {
-      title: 'Back',
+      title: '< Back',
       tintColor: '#48BBEC',
       handler: () => this.props.navigator.pop(),
     };
@@ -134,10 +134,12 @@ Dashboard.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#333333'
   }, 
   viewContainer: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#333333'
   },
   image: {
     height: 350
