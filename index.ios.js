@@ -1,28 +1,29 @@
 'use strict';
 
 import React, {
-  AppRegistry, Component, StyleSheet, Navigator, View
+  AppRegistry, Component, StyleSheet, NavigatorIOS, View, StatusBarIOS
 } from 'react-native';
-import NavigationBar from 'react-native-navbar';
 import Main from './App/Components/Main';
-
-function renderScene(route, navigator) {
-  return <route.component {...route.passProps} route={route} navigator={navigator} />;
-}
 
 class GitHub extends Component {
   render() {
     /* beautify ignore:start */
     const initialRoute = {
+      title: 'GitHub Viewer',
       component: Main
     };
+    
+    StatusBarIOS.setStyle('light-content');
 
     return (
-      <View style={styles.container}>
-        <Navigator
-          initialRoute={initialRoute}
-          renderScene={renderScene}/>
-      </View>
+      <NavigatorIOS
+        barTintColor='#333333'
+        tintColor='#48BBEC'
+        titleTextColor='#FFF'
+        backButtonTitle='Back'
+        style={styles.container}
+        initialRoute={initialRoute}
+      />
     );
     /* beautify ignore:end */
   }
@@ -35,17 +36,3 @@ const styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('GitHub', () => GitHub);
-
-  //  return (
-  //     <NavigatorIOS
-  //       barTintColor='#333333'
-  //       tintColor='#48BBEC'
-  //       titleTextColor='#FFF'
-  //       style={styles.container}
-  //       initialRoute={{
-  //         title: 'github viewer',
-  //         component: Main
-  //       }}
-  //     />
-  //   );
-

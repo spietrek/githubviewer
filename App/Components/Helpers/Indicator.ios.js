@@ -6,10 +6,10 @@ import Spinner from 'react-native-loading-spinner-overlay';
 class Indicator extends Component {
   render() {
     /* beautify ignore:start */ 
-   return (
-     <Spinner size='large' visible={this.props.isLoading} />
+    return (
+      <Spinner size='large' visible={this.props.isLoading} />
     )
-   /* beautify ignore:end */
+    /* beautify ignore:end */
   }
 };
 

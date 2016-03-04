@@ -6,14 +6,21 @@ import Profile from './Profile';
 import Repositories from './Repositories';
 import Notes from './Notes';
 import Api from '../Utils/Api';
+import Header from './Helpers/Header';
+import Badge from './Badge';
 
 class Dashboard extends Component {
   makeBackground(btn) {
     let obj = {
       flexDirection: 'row',
-      alignSelf: 'stretch',
       justifyContent: 'center',
-      flex: 1
+      flex: 1,
+      height: 125,
+      width: 125,
+      borderRadius: 65,
+      marginTop: 5,
+      marginBottom: 5,
+      alignSelf: 'center'
     }
 
     if (btn === 0) {
@@ -29,6 +36,7 @@ class Dashboard extends Component {
 
   gotoProfile() {
     this.props.navigator.push({
+      title: 'Profile',
       component: Profile,
       passProps: {
         userInfo: this.props.userInfo
@@ -40,6 +48,7 @@ class Dashboard extends Component {
     Api.getRepos(this.props.userInfo.login)
       .then((res) => {
         this.props.navigator.push({
+          title: 'Repos',
           component: Repositories,
           passProps: {
             userInfo: this.props.userInfo,
@@ -54,8 +63,8 @@ class Dashboard extends Component {
       .then((res) => {
         res = res || {};
         this.props.navigator.push({
-          component: Notes,
           title: 'Notes',
+          component: Notes,
           passProps: {
             notes: res,
             userInfo: this.props.userInfo
@@ -66,43 +75,17 @@ class Dashboard extends Component {
   
   render() {
     /* beautify ignore:start */
-    const titleConfig = {
-      title: this.props.userInfo.name || 'Select an Option',
-      tintColor: '#FFF'
-    };
- 
-    const leftButtonConfig = {
-      title: '< Back',
-      tintColor: '#48BBEC',
-      handler: () => this.props.navigator.pop(),
-    };
-
-    const statusBarConfig = {
-      hidden: false,
-      showAnimation: 'fade',
-      hideAnimation: 'fade',
-      style: 'light-content'
-    };
-    
     return (
       <View style={styles.container}>
-        <NavigationBar
-          tintColor='#444444'
-          title={titleConfig}
-          leftButton={leftButtonConfig}
-          statusBar={statusBarConfig}
-        />
+        <Header title={this.props.userInfo.name} />
         <View style={styles.viewContainer}>
-          <Image
-            source={{uri: this.props.userInfo.avatar_url}}
-            style={styles.image}
-          />
+          <Badge userInfo={this.props.userInfo}/>
           <TouchableHighlight
             onPress={this.gotoProfile.bind(this)}
             style={this.makeBackground(0)}
             underlayColor='#14aaeb'>
             <Text style={styles.buttonText}>
-              View Profile
+              Profile
             </Text>
           </TouchableHighlight>
           <TouchableHighlight
@@ -110,7 +93,7 @@ class Dashboard extends Component {
             style={this.makeBackground(1)}
             underlayColor='#e62e00'>
             <Text style={styles.buttonText}>
-              View Repos
+              Repos
             </Text>
           </TouchableHighlight>
           <TouchableHighlight
@@ -118,7 +101,7 @@ class Dashboard extends Component {
             style={this.makeBackground(2)}
             underlayColor='#425ff0'>
             <Text style={styles.buttonText}>
-              View Notes
+              Notes
             </Text>
           </TouchableHighlight>
         </View>
@@ -139,10 +122,8 @@ const styles = StyleSheet.create({
   }, 
   viewContainer: {
     flex: 1,
+    marginTop: 60,
     backgroundColor: '#333333'
-  },
-  image: {
-    height: 350
   },
   buttonText: {
     fontSize: 24,

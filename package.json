@@ -11,6 +11,6 @@
     "react-native-navbar": "^1.2.2"
   },
   "devDependencies": {
-    "eslint-plugin-react": "^4.0.0"
+    "eslint-plugin-react": "^4.1.0"
   }
 }

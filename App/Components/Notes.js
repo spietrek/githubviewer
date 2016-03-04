@@ -5,6 +5,7 @@ import NavigationBar from 'react-native-navbar';
 import Badge from './Badge';
 import Separator from './Helpers/Separator';
 import Api from '../Utils/Api';
+import Header from './Helpers/Header';
 
 class Notes extends React.Component{
   constructor(props){
@@ -119,32 +120,9 @@ class Notes extends React.Component{
   
   render(){
     /* beautify ignore:start */
-    const titleConfig = {
-      title: 'Profile',
-      tintColor: '#FFF'
-    };
- 
-    const leftButtonConfig = {
-      title: '< Back',
-      tintColor: '#48BBEC',      
-      handler: () => this.props.navigator.pop(),
-    };
-
-    const statusBarConfig = {
-      hidden: false,
-      showAnimation: 'fade',
-      hideAnimation: 'fade',
-      style: 'light-content'
-    };
-    
     return (
       <View style={styles.container}>
-        <NavigationBar
-          tintColor='#444444'
-          title={titleConfig}
-          leftButton={leftButtonConfig}
-          statusBar={statusBarConfig}
-        />            
+        <Header title='Notes' />
         <View style={styles.viewContainer}>
           <ListView
             dataSource={this.state.dataSource}
