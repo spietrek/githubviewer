@@ -2,6 +2,7 @@ import React, {
   Component, Text, View, StyleSheet, TextInput, TouchableHighlight, ActivityIndicatorIOS, StatusBar
 } from 'react-native';
 import NavigationBar from 'react-native-navbar';
+import Header from './Helpers/Header';
 import Api from '../Utils/Api';
 import Dashboard from './Dashboard';
 import Indicator from './Helpers/Indicator';
@@ -67,26 +68,15 @@ class Main extends Component {
     let showErr = (this.state.error
       ? <Text style={styles.error}>{this.state.error}</Text>
       : <View></View>)
-    
+
     const titleConfig = {
       title: 'GitHub Viewer',
       tintColor: '#FFF'
     };
-    
-    const statusBarConfig = {
-      hidden: false,
-      showAnimation: 'fade',
-      hideAnimation: 'fade',
-      style: 'light-content'
-    };
 
-    return (
+   return (
       <View style={styles.container}>
-        <NavigationBar
-          tintColor='#444444'
-          title={titleConfig}
-          statusBar={statusBarConfig}
-        />
+        <Header title='GitHub Viewer' />
         <View style={styles.viewContainer}>
           <Text style={styles.title}>
             Search for a GitHub User
@@ -97,7 +87,7 @@ class Main extends Component {
               SEARCH
             </Text>
           </TouchableHighlight>
-          <Indicator isLoading={this.state.isLoading} />
+          {/*<Indicator isLoading={this.state.isLoading} />*/}
           {showErr}
         </View>
       </View>

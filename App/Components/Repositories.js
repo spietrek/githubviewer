@@ -5,6 +5,7 @@ import NavigationBar from 'react-native-navbar';
 import Badge from './Badge';
 import Separator from './Helpers/Separator';
 import Web_View from './WebView';
+import Header from './Helpers/Header';
 
 class Repositories extends Component {
   openPage(url){
@@ -38,32 +39,9 @@ class Repositories extends Component {
       )
     });
     
-    const titleConfig = {
-      title: 'Repos',
-      tintColor: '#FFF'
-    };
- 
-    const leftButtonConfig = {
-      title: '< Back',
-      tintColor: '#48BBEC',      
-      handler: () => this.props.navigator.pop(),
-    };
-
-    const statusBarConfig = {
-      hidden: false,
-      showAnimation: 'fade',
-      hideAnimation: 'fade',
-      style: 'light-content'
-    };
-    
     return (
       <View style={styles.container}>
-       <NavigationBar
-          tintColor='#444444'
-          title={titleConfig}
-          leftButton={leftButtonConfig}
-          statusBar={statusBarConfig}
-        />      
+      <Header title='Repos' />
         <ScrollView style={styles.scrollContainer}>
           <Badge userInfo={userInfo}/>
           {list}

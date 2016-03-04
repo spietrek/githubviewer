@@ -27,7 +27,7 @@ class GitHub extends Component {
     const initialRoute = {
       component: Main
     };
-
+    
     return (
       <View style={styles.container}>
         <Navigator
