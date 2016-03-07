@@ -19,6 +19,10 @@ var Api = {
     var url = `https://smp-github-react.firebaseio.com/${username}.json`;
     return fetch(url, {
       method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(note)
     }).then((res) => res.json());
   },

@@ -10,17 +10,15 @@ import Header from './Helpers/Header';
 import Badge from './Badge';
 
 class Dashboard extends Component {
-  makeBackground(btn) {
+  makeButton(btn) {
     let obj = {
-      flexDirection: 'row',
       justifyContent: 'center',
-      flex: 1,
-      height: 125,
-      width: 125,
-      borderRadius: 65,
-      marginTop: 5,
-      marginBottom: 5,
-      alignSelf: 'center'
+      height: 90,
+      width: 90,
+      borderRadius: 8,
+      marginLeft: 20,
+      alignSelf: 'flex-start',
+      marginTop: 80
     }
 
     if (btn === 0) {
@@ -75,35 +73,38 @@ class Dashboard extends Component {
   
   render() {
     /* beautify ignore:start */
+    let {userInfo} = this.props;
     return (
       <View style={styles.container}>
-        <Header title={this.props.userInfo.name} />
+        <Header title={userInfo.name} />
         <View style={styles.viewContainer}>
-          <Badge userInfo={this.props.userInfo}/>
-          <TouchableHighlight
-            onPress={this.gotoProfile.bind(this)}
-            style={this.makeBackground(0)}
-            underlayColor='#14aaeb'>
-            <Text style={styles.buttonText}>
-              Profile
-            </Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={this.gotoRepos.bind(this)}
-            style={this.makeBackground(1)}
-            underlayColor='#e62e00'>
-            <Text style={styles.buttonText}>
-              Repos
-            </Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={this.gotoNotes.bind(this)}
-            style={this.makeBackground(2)}
-            underlayColor='#425ff0'>
-            <Text style={styles.buttonText}>
-              Notes
-            </Text>
-          </TouchableHighlight>
+          <Badge userInfo={userInfo}/>
+          <View style={styles.buttonContainer}>
+            <TouchableHighlight
+              onPress={this.gotoProfile.bind(this)}
+              style={this.makeButton(0)}
+              underlayColor='#14aaeb'>
+              <Text style={styles.buttonText}>
+                Profile
+              </Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={this.gotoRepos.bind(this)}
+              style={this.makeButton(1)}
+              underlayColor='#e62e00'>
+              <Text style={styles.buttonText}>
+                Repos
+              </Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={this.gotoNotes.bind(this)}
+              style={this.makeButton(2)}
+              underlayColor='#425ff0'>
+              <Text style={styles.buttonText}>
+                Notes
+              </Text>
+            </TouchableHighlight>
+          </View>
         </View>
       </View>
     );
@@ -123,10 +124,15 @@ const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
     marginTop: 60,
-    backgroundColor: '#333333'
+    backgroundColor: '#4d4d4d'
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   buttonText: {
-    fontSize: 24,
+    fontSize: 20,
     color: 'white',
     alignSelf: 'center'
   },
