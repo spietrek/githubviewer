@@ -1,11 +1,12 @@
 import React, {
-  Component, ScrollView, View, Text, ActionSheetIOS, TextInput, ListView, TouchableHighlight, StyleSheet
+  Component, ScrollView, View, Text, ActionSheetIOS, TextInput, ListView, TouchableHighlight, StyleSheet, Alert
 } from 'react-native';
 import NavigationBar from 'react-native-navbar';
 import Badge from './Badge';
 import Separator from './Helpers/Separator';
 import Api from '../Utils/Api';
 import Header from './Helpers/Header';
+import Swipeout from 'react-native-swipeout';
 
 class Notes extends React.Component{
   constructor(props){
@@ -45,14 +46,40 @@ class Notes extends React.Component{
       });
   }
   
+  deleteNote(rowID, userInfo) {
+    Api.deleteNote(userInfo.login, rowID)
+      .then((data) => {
+        Api.getNotes(userInfo.login)
+          .then((data) => {
+            this.setState({
+              dataSource: this.ds.cloneWithRows(data)
+            })
+          });
+      })
+      .catch((error) => {
+        console.log('Delete request failed', error);
+        this.setState({error})
+      });
+  }
+  
   deleteRow(rowID, userInfo) {
-    const BUTTONS = [
+    Alert.alert(
+      'Delete Note',
+      'Are you sure you want to delete this note?',
+      [
+        {text: 'Delete', onPress: () => this.deleteNote(rowID, userInfo)},
+        {text: 'Cancel', style: 'cancel'}
+      ]
+    )
+    
+    {/*const BUTTONS = [
       'Delete Note',
       'Cancel',
     ];
     const DESTRUCTIVE_INDEX = 0;
     const CANCEL_INDEX = 1;
     ActionSheetIOS.showActionSheetWithOptions({
+      title: 'Are you sure you want to delete this note?',
       options: BUTTONS,
       cancelButtonIndex: CANCEL_INDEX,
       destructiveButtonIndex: DESTRUCTIVE_INDEX
@@ -73,23 +100,27 @@ class Notes extends React.Component{
             this.setState({error})
           });
       }
-    });
+    });*/}
    }
   
   renderRow(rowData, secID, rowID, userInfo){
     /* beautify ignore:start */
+    let swipeBtns = [{
+      text: 'Delete',
+      backgroundColor: '#FF0000',
+      underlayColor: '#CC0000',
+      onPress: () => { this.deleteRow(rowID, userInfo) }
+    }];
+    
     return (
       <View style={styles.dataContainer}>
-        <Text numberOfLines={1}
-          style={styles.dataText}> {rowData} </Text>
-        <TouchableHighlight
-          style={styles.deleteButton}
-          onPress={() => this.deleteRow(rowID, userInfo)}
-          underlayColor="#F2F2F2">
-          <Text style={styles.redButtonText}> 
-            X 
+        <Swipeout right={swipeBtns}
+          autoClose='true'
+          backgroundColor= 'transparent'>
+          <Text numberOfLines={1}
+            style={styles.dataText}> {rowData} 
           </Text>
-        </TouchableHighlight>
+        </Swipeout>
     </View>
     )
     /* beautify ignore:end */

@@ -45,6 +45,10 @@ class Profile extends Component {
   }
 };
 
+Profile.propTypes = {
+  userInfo: React.PropTypes.object.isRequired
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
