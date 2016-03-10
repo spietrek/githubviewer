@@ -68,7 +68,7 @@ class Notes extends React.Component{
       'Are you sure you want to delete this note?',
       [
         {text: 'Delete', onPress: () => this.deleteNote(rowID, userInfo)},
-        {text: 'Cancel', style: 'cancel'}
+        {text: 'Cancel'}
       ]
     )
     
