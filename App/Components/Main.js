@@ -5,7 +5,6 @@ import NavigationBar from 'react-native-navbar';
 import Header from './Helpers/Header';
 import Api from '../Utils/Api';
 import Dashboard from './Dashboard';
-import Indicator from './Helpers/Indicator';
 
 class Main extends Component {
   constructor(props) {
