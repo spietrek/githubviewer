@@ -9,6 +9,11 @@ var Api = {
     var url = `https://api.github.com/users/${username}/repos`;
     return fetch(url).then((res) => res.json());
   },
+  getSearchUsers(search) {
+    search = search.toLowerCase().trim();
+    var url = `https://api.github.com/search/users?q=${search}`;
+    return fetch(url).then((res) => res.json());
+  },  
   getNotes(username){
     username = username.toLowerCase().trim();
     var url = `https://smp-github-react.firebaseio.com/${username}.json`;

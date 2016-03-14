@@ -1,5 +1,5 @@
 import React, {
-  Component, Text, View, StyleSheet, TextInput, TouchableHighlight, ActivityIndicatorIOS, StatusBar
+  Component, Text, View, StyleSheet, TextInput, TouchableHighlight, ActivityIndicatorIOS, StatusBar, Platform
 } from 'react-native';
 import NavigationBar from 'react-native-navbar';
 import Header from './Helpers/Header';
@@ -78,15 +78,14 @@ class Main extends Component {
         <Header title='GitHub Viewer' />
         <View style={styles.viewContainer}>
           <Text style={styles.title}>
-            Search for a GitHub User
+            Enter a GitHub User Name
           </Text>
           {this.input()}
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit.bind(this)} underlayColor='white'>
             <Text style={styles.buttonText}>
-              SEARCH
+              GO
             </Text>
           </TouchableHighlight>
-          {/*<Indicator isLoading={this.state.isLoading} />*/}
           {showErr}
         </View>
       </View>
