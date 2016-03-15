@@ -39,9 +39,36 @@ class Repositories extends Component {
       )
     });
     
+    const titleConfig = {
+      title: 'Repos',
+      tintColor: '#FFF'
+    };
+
+    const leftButtonConfig = {
+      title: '< ' + this.props.userInfo.login,
+      tintColor: '#48BBEC',
+      style: {
+        marginTop: 5
+      },
+      handler: () => this.props.navigator.pop(),
+    };
+
+    const statusBarConfig = {
+      hidden: false,
+      showAnimation: 'fade',
+      hideAnimation: 'fade',
+      style: 'light-content'
+    };    
+    
     return (
       <View style={styles.container}>
-      <Header title='Repos' />
+        <Header title='Repos' />
+        <NavigationBar
+          tintColor='#444444'
+          title={titleConfig}
+          leftButton={leftButtonConfig}
+          statusBar={statusBarConfig}
+        />            
         <ScrollView style={styles.scrollContainer}>
           <Badge userInfo={userInfo}/>
           {list}

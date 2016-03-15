@@ -1,6 +1,7 @@
 import React, {
   Component, ScrollView, View, Text, TouchableHighlight, StyleSheet, Image
 } from 'react-native';
+import NavigationBar from 'react-native-navbar';
 import SearchBar from 'react-native-search-bar';
 import Api from '../Utils/Api';
 import Separator from './Helpers/Separator';
@@ -16,10 +17,12 @@ class Search extends Component {
     }
   }
   
-  handleChange(search) {
+  handleSearch(search) {
+    this.refs.searchBar.blur();
     this.setState({
-      users: []
-    })
+      users: [],
+      showsCancelButton: false
+    });
     if (search.length > 3) {
       Api.getSearchUsers(search)
         .then((data) => {
@@ -37,6 +40,11 @@ class Search extends Component {
     }
  }
  
+ handleCancel() {
+   this.refs.searchBar.blur();
+   this.refs.searchBar.showsCancelButton = false;
+ }
+ 
  openUser(userInfo){
     Api.getBio(userInfo.login).then((res) => {
       this.props.navigator.push({
@@ -51,6 +59,27 @@ class Search extends Component {
   
   render() {
     /* beautify ignore:start */ 
+    const titleConfig = {
+      title: 'Search',
+      tintColor: '#FFF'
+    };
+
+    const leftButtonConfig = {
+      title: '< Back',
+      tintColor: '#48BBEC',
+      style: {
+        marginTop: 5
+      },
+      handler: () => this.props.navigator.pop(),
+    };
+
+    const statusBarConfig = {
+      hidden: false,
+      showAnimation: 'fade',
+      hideAnimation: 'fade',
+      style: 'light-content'
+    };
+    
     let users = this.state.users;
     let list = [];
     if (users) {
@@ -73,11 +102,20 @@ class Search extends Component {
 
     return (
       <View style={styles.container}>
+        <NavigationBar
+          tintColor='#444444'
+          title={titleConfig}
+          leftButton={leftButtonConfig}
+          statusBar={statusBarConfig}
+        />     
         <ScrollView style={styles.scrollContainer} keyboardDismissMode='on-drag'>
           <SearchBar
             ref='searchBar'
             placeholder='Search'
-            onSearchButtonPress={this.handleChange.bind(this)}
+            onCancelButtonPress={() => this.setState({showsCancelButton: false})}
+            onFocus={() => this.setState({showsCancelButton: true})}
+            showsCancelButton={this.state.showsCancelButton} 
+            onSearchButtonPress={this.handleSearch.bind(this)}
           />
           {list}
         </ScrollView>

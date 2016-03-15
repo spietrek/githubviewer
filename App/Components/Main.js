@@ -5,6 +5,7 @@ import NavigationBar from 'react-native-navbar';
 import Header from './Helpers/Header';
 import Api from '../Utils/Api';
 import Dashboard from './Dashboard';
+import Search from './Search';
 
 class Main extends Component {
   constructor(props) {
@@ -69,13 +70,39 @@ class Main extends Component {
       : <View></View>)
 
     const titleConfig = {
-      title: 'GitHub Viewer',
-      tintColor: '#FFF'
-    };
+       title: 'GitHub Viewer',
+       tintColor: '#FFF'
+     };
+     
+     const rightButtonConfig = {
+       title: 'Find',
+       style: {
+         marginTop: 5
+       },
+       tintColor: '#48BBEC',
+       handler: () => {
+         this.props.navigator.push({
+          title: 'Search Users',
+          component: Search
+        });
+       }
+     };
+     
+     const statusBarConfig = {
+       hidden: false,
+       showAnimation: 'fade',
+       hideAnimation: 'fade',
+       style: 'light-content'
+     };
 
    return (
       <View style={styles.container}>
-        <Header title='GitHub Viewer' />
+        <NavigationBar
+           tintColor='#444444'
+           title={titleConfig}
+           statusBar={statusBarConfig}
+           rightButton={rightButtonConfig}
+         />
         <View style={styles.viewContainer}>
           <Text style={styles.title}>
             Enter a GitHub User Name
