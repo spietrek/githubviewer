@@ -74,10 +74,38 @@ class Dashboard extends Component {
   render() {
     /* beautify ignore:start */
     let {userInfo} = this.props;
-    let title = userInfo.name || userInfo.login;
+    let title = userInfo.login;
+    
+     const titleConfig = {
+       title: title,
+       tintColor: '#FFF'
+     };
+  
+     const leftButtonConfig = {
+       title: '< Back',
+       tintColor: '#48BBEC',
+       style: {
+         marginTop: 5
+       },
+       handler: () => this.props.navigator.pop(),
+     };
+ 
+     const statusBarConfig = {
+       hidden: false,
+       showAnimation: 'fade',
+       hideAnimation: 'fade',
+       style: 'light-content'
+     };
+    
     return (
       <View style={styles.container}>
-        <Header title={title} />
+        <Header title='Dashboard' />
+        <NavigationBar
+          tintColor='#444444'
+          title={titleConfig}
+          leftButton={leftButtonConfig}
+          statusBar={statusBarConfig}
+        />
         <View style={styles.viewContainer}>
           <Badge userInfo={userInfo}/>
           <View style={styles.buttonContainer}>
@@ -124,7 +152,7 @@ const styles = StyleSheet.create({
   }, 
   viewContainer: {
     flex: 1,
-    marginTop: 60,
+    //marginTop: 60,
     backgroundColor: '#4d4d4d'
   },
   buttonContainer: {
