@@ -137,8 +137,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 30,
     paddingRight: 30,
+    paddingTop: 110,
     flexDirection: 'column',
-    justifyContent: 'center',
     backgroundColor: '#404040'
   },
   title: {
