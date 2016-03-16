@@ -1,5 +1,5 @@
 import React, {
-  Component, WebView, View, StyleSheet
+  Component, WebView, View, StyleSheet, Platform
 } from 'react-native';
 import NavigationBar from 'react-native-navbar';
 import Header from './Helpers/Header';
@@ -15,9 +15,6 @@ class Web extends Component {
     const leftButtonConfig = {
       title: '< Repos',
       tintColor: '#48BBEC',
-      style: {
-        marginTop: 5
-      },
       handler: () => this.props.navigator.pop(),
     };
 
@@ -27,16 +24,18 @@ class Web extends Component {
       hideAnimation: 'fade',
       style: 'light-content'
     };
-        
-    return (
-      <View style={styles.container}>
-        <Header title='Repo' />
-        <NavigationBar
+    
+    let header = Platform.OS === 'android' ? <Header title='Repo' /> : 
+      <NavigationBar
           tintColor='#444444'
           title={titleConfig}
           leftButton={leftButtonConfig}
           statusBar={statusBarConfig}
-         />            
+        />    
+        
+    return (
+      <View style={styles.container}>
+        {header}       
         <View style={styles.viewContainer}>
           <WebView source={{uri: this.props.url}}/>
         </View>

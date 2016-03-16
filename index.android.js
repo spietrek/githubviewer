@@ -3,7 +3,6 @@
 import React, {
   AppRegistry, Component, StyleSheet, Navigator, View, BackAndroid
 } from 'react-native';
-import NavigationBar from 'react-native-navbar';
 import Main from './App/Components/Main';
 
 var _navigator;

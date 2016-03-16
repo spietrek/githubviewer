@@ -67,9 +67,6 @@ class Search extends Component {
     const leftButtonConfig = {
       title: '< Back',
       tintColor: '#48BBEC',
-      style: {
-        marginTop: 5
-      },
       handler: () => this.props.navigator.pop(),
     };
 

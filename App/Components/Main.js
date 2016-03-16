@@ -6,6 +6,7 @@ import Header from './Helpers/Header';
 import Api from '../Utils/Api';
 import Dashboard from './Dashboard';
 import Search from './Search';
+import SearchIcon from './Helpers/SearchIcon';
 
 class Main extends Component {
   constructor(props) {
@@ -62,6 +63,24 @@ class Main extends Component {
     )
     /* beautify ignore:end */
   }
+  
+  handleSearch() {
+    this.props.navigator.push({
+      title: 'Search Users',
+      component: Search
+    });
+  }
+       
+  searchButton(){
+    /* beautify ignore:start */
+    return (
+      <SearchIcon
+        style={{ marginRight: 8}}
+        onPress={this.handleSearch.bind(this)}
+      />
+    )
+    /* beautify ignore:end */
+  }
 
   render() {
     /* beautify ignore:start */
@@ -74,35 +93,24 @@ class Main extends Component {
        tintColor: '#FFF'
      };
      
-     const rightButtonConfig = {
-       title: 'Find',
-       style: {
-         marginTop: 5
-       },
-       tintColor: '#48BBEC',
-       handler: () => {
-         this.props.navigator.push({
-          title: 'Search Users',
-          component: Search
-        });
-       }
-     };
-     
-     const statusBarConfig = {
-       hidden: false,
-       showAnimation: 'fade',
-       hideAnimation: 'fade',
-       style: 'light-content'
-     };
+    const statusBarConfig = {
+      hidden: false,
+      showAnimation: 'fade',
+      hideAnimation: 'fade',
+      style: 'light-content'
+    };
+    
+    let header = Platform.OS === 'android' ? <Header title='GitHub Viewer'/> : 
+      <NavigationBar
+          tintColor='#444444'
+          title={titleConfig}
+          statusBar={statusBarConfig}
+          rightButton={this.searchButton()}
+        />;
 
-   return (
+    return (
       <View style={styles.container}>
-        <NavigationBar
-           tintColor='#444444'
-           title={titleConfig}
-           statusBar={statusBarConfig}
-           rightButton={rightButtonConfig}
-         />
+        {header}
         <View style={styles.viewContainer}>
           <Text style={styles.title}>
             Enter a GitHub User Name

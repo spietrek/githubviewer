@@ -1,5 +1,5 @@
 import React, {
-  Component, ScrollView, View, Text, ActionSheetIOS, TextInput, ListView, TouchableHighlight, StyleSheet, Alert
+  Component, ScrollView, View, Text, ActionSheetIOS, TextInput, ListView, TouchableHighlight, StyleSheet, Alert, Platform
 } from 'react-native';
 import NavigationBar from 'react-native-navbar';
 import Badge from './Badge';
@@ -71,36 +71,6 @@ class Notes extends React.Component{
         {text: 'Cancel'}
       ]
     )
-    
-    {/*const BUTTONS = [
-      'Delete Note',
-      'Cancel',
-    ];
-    const DESTRUCTIVE_INDEX = 0;
-    const CANCEL_INDEX = 1;
-    ActionSheetIOS.showActionSheetWithOptions({
-      title: 'Are you sure you want to delete this note?',
-      options: BUTTONS,
-      cancelButtonIndex: CANCEL_INDEX,
-      destructiveButtonIndex: DESTRUCTIVE_INDEX
-    },
-    (buttonIndex) => {
-      if (buttonIndex === 0) {
-        Api.deleteNote(userInfo.login, rowID)
-          .then((data) => {
-            Api.getNotes(userInfo.login)
-              .then((data) => {
-                this.setState({
-                  dataSource: this.ds.cloneWithRows(data)
-                })
-              });
-          })
-          .catch((error) => {
-            console.log('Delete request failed', error);
-            this.setState({error})
-          });
-      }
-    });*/}
    }
   
   renderRow(rowData, secID, rowID, userInfo){
@@ -159,9 +129,6 @@ class Notes extends React.Component{
     const leftButtonConfig = {
       title: '< ' + this.props.userInfo.login,
       tintColor: '#48BBEC',
-      style: {
-        marginTop: 5
-      },
       handler: () => this.props.navigator.pop(),
     };
 
@@ -170,17 +137,19 @@ class Notes extends React.Component{
       showAnimation: 'fade',
       hideAnimation: 'fade',
       style: 'light-content'
-    };    
+    }; 
     
-    return (
-      <View style={styles.container}>
-        <Header title='Notes' />
-        <NavigationBar
+    let header = Platform.OS === 'android' ? <Header title='Notes' /> : 
+      <NavigationBar
           tintColor='#444444'
           title={titleConfig}
           leftButton={leftButtonConfig}
           statusBar={statusBarConfig}
-        />            
+        />       
+    
+    return (
+      <View style={styles.container}>
+        {header}
         <View style={styles.viewContainer}>
           <ListView
             dataSource={this.state.dataSource}

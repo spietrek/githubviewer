@@ -1,5 +1,5 @@
 import React, {
-  Component, View, Text, StyleSheet, ScrollView
+  Component, View, Text, StyleSheet, ScrollView, Platform
 } from 'react-native';
 import NavigationBar from 'react-native-navbar';
 import Badge from './Badge';
@@ -40,9 +40,6 @@ class Profile extends Component {
     const leftButtonConfig = {
       title: '< ' + this.props.userInfo.login,
       tintColor: '#48BBEC',
-      style: {
-        marginTop: 5
-      },
       handler: () => this.props.navigator.pop(),
     };
 
@@ -52,16 +49,18 @@ class Profile extends Component {
       hideAnimation: 'fade',
       style: 'light-content'
     };
-   
-    return (
-      <View style={styles.container}>
-        <Header title='Profile' />
-        <NavigationBar
+
+    let header = Platform.OS === 'android' ? <Header title='Profile' /> : 
+      <NavigationBar
           tintColor='#444444'
           title={titleConfig}
           leftButton={leftButtonConfig}
           statusBar={statusBarConfig}
-        />       
+        />    
+   
+    return (
+      <View style={styles.container}>
+        {header}
         <ScrollView style={styles.scrollContainer}>
           <Badge userInfo={userInfo}/>
           {list}
