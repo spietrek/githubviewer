@@ -1,5 +1,5 @@
 import React, {
-  Component, ScrollView, View, Text, TouchableHighlight, StyleSheet
+  Component, ScrollView, View, Text, TouchableHighlight, StyleSheet, Platform
 } from 'react-native';
 import NavigationBar from 'react-native-navbar';
 import Badge from './Badge';
@@ -47,9 +47,6 @@ class Repositories extends Component {
     const leftButtonConfig = {
       title: '< ' + this.props.userInfo.login,
       tintColor: '#48BBEC',
-      style: {
-        marginTop: 5
-      },
       handler: () => this.props.navigator.pop(),
     };
 
@@ -58,17 +55,19 @@ class Repositories extends Component {
       showAnimation: 'fade',
       hideAnimation: 'fade',
       style: 'light-content'
-    };    
+    };
     
-    return (
-      <View style={styles.container}>
-        <Header title='Repos' />
-        <NavigationBar
+    let header = Platform.OS === 'android' ? <Header title='Repos' /> : 
+      <NavigationBar
           tintColor='#444444'
           title={titleConfig}
           leftButton={leftButtonConfig}
           statusBar={statusBarConfig}
         />            
+    
+    return (
+      <View style={styles.container}>
+        {header}         
         <ScrollView style={styles.scrollContainer}>
           <Badge userInfo={userInfo}/>
           {list}

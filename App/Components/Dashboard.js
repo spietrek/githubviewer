@@ -1,12 +1,12 @@
 import React, {
-  Component, Text, View, StyleSheet, Image, TouchableHighlight
+  Component, Text, View, StyleSheet, Image, TouchableHighlight, Platform
 } from 'react-native';
 import NavigationBar from 'react-native-navbar';
+import Header from './Helpers/Header';
 import Profile from './Profile';
 import Repositories from './Repositories';
 import Notes from './Notes';
 import Api from '../Utils/Api';
-import Header from './Helpers/Header';
 import Badge from './Badge';
 
 class Dashboard extends Component {
@@ -76,36 +76,35 @@ class Dashboard extends Component {
     let {userInfo} = this.props;
     let title = userInfo.login;
     
-     const titleConfig = {
-       title: title,
-       tintColor: '#FFF'
-     };
-  
-     const leftButtonConfig = {
-       title: '< Back',
-       tintColor: '#48BBEC',
-       style: {
-         marginTop: 5
-       },
-       handler: () => this.props.navigator.pop(),
-     };
- 
-     const statusBarConfig = {
-       hidden: false,
-       showAnimation: 'fade',
-       hideAnimation: 'fade',
-       style: 'light-content'
-     };
+    const titleConfig = {
+      title: title,
+      tintColor: '#FFF'
+    };
+
+    const leftButtonConfig = {
+      title: '< Back',
+      tintColor: '#48BBEC',
+      handler: () => this.props.navigator.pop(),
+    };
+
+    const statusBarConfig = {
+      hidden: false,
+      showAnimation: 'fade',
+      hideAnimation: 'fade',
+      style: 'light-content'
+    };
     
-    return (
-      <View style={styles.container}>
-        <Header title='Dashboard' />
-        <NavigationBar
+    let header = Platform.OS === 'android' ? <Header title={title}/> : 
+      <NavigationBar
           tintColor='#444444'
           title={titleConfig}
           leftButton={leftButtonConfig}
           statusBar={statusBarConfig}
         />
+  
+    return (
+      <View style={styles.container}>
+        {header}
         <View style={styles.viewContainer}>
           <Badge userInfo={userInfo}/>
           <View style={styles.buttonContainer}>
@@ -152,7 +151,6 @@ const styles = StyleSheet.create({
   }, 
   viewContainer: {
     flex: 1,
-    //marginTop: 60,
     backgroundColor: '#4d4d4d'
   },
   buttonContainer: {
