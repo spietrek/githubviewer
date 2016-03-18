@@ -24,7 +24,6 @@ class Repositories extends Component {
     const list = repos.map((item, index) => {
       const desc = repos[index].description ?
         <Text
-          numberOfLines={1}
           style={styles.description}
         >
           {repos[index].description}
@@ -112,11 +111,14 @@ const styles = StyleSheet.create({
   stars: {
     color: '#48BBEC',
     fontSize: 14,
-    paddingBottom: 5
+    paddingBottom: 5,
+    marginLeft: 2
   },
   description: {
     fontSize: 14,
-    paddingBottom: 5
+    paddingBottom: 5,
+    marginLeft: 6,
+    marginRight: 6
   }
 });
 

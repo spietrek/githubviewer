@@ -11,11 +11,11 @@ import Swipeout from 'react-native-swipeout';
 class Notes extends Component {
   constructor(props) {
     super(props);
-    this.ds = new ListView.DataSource({
+    const ds = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2
     });
     this.state = {
-      dataSource: this.ds.cloneWithRows(this.props.notes),
+      dataSource: ds.cloneWithRows(this.props.notes),
       note: '',
       error: ''
     };
@@ -91,7 +91,7 @@ class Notes extends Component {
           backgroundColor= 'transparent'
           right={swipeBtns}
         >
-          <Text numberOfLines={1}
+          <Text
             style={styles.dataText}
           >
             {rowData}
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   dataText: {
-    margin: 10,
+    margin: 15,
     fontSize: 16,
     flex: 12
   },
