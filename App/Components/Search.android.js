@@ -1,17 +1,16 @@
 import React, {
-  Component, View, Text, StyleSheet
+  Component, View, StyleSheet
 } from 'react-native';
 
 class Search extends Component {
   render() {
-    /* beautify ignore:start */ 
+    /* beautify ignore:start */
     return (
-      <View style={styles.container}>
-      </View> 
-    )
+      <View style={styles.container} />
+    );
     /* beautify ignore:end */
   }
-};
+}
 
 const styles = StyleSheet.create({
   container: {

@@ -1,5 +1,5 @@
 import React, {
-  Component, Text, View, StyleSheet, TextInput, TouchableHighlight, ActivityIndicatorIOS, StatusBar, Platform
+  Component, Text, View, StyleSheet, TextInput, TouchableHighlight, Platform
 } from 'react-native';
 import NavigationBar from 'react-native-navbar';
 import Header from './Helpers/Header';
@@ -15,7 +15,7 @@ class Main extends Component {
       username: '',
       isLoading: false,
       error: false
-    }
+    };
   }
 
   handleChange(event) {
@@ -33,7 +33,7 @@ class Main extends Component {
         this.setState({
           error: 'User not found',
           isLoading: false
-        })
+        });
       } else {
         this.props.navigator.push({
           title: res.name || 'Select an Option',
@@ -46,67 +46,67 @@ class Main extends Component {
           isLoading: false,
           error: false,
           username: ''
-        })
+        });
       }
-    })
+    });
   }
 
   input() {
     /* beautify ignore:start */
-    return(
+    return (
       <TextInput
-        style={styles.searchInput}
-        value={this.state.username}
         autoCapitalize='none'
         onChange={this.handleChange.bind(this)}
+        style={styles.searchInput}
+        value={this.state.username}
       />
-    )
+    );
     /* beautify ignore:end */
   }
-  
+
   handleSearch() {
     this.props.navigator.push({
       title: 'Search Users',
       component: Search
     });
   }
-       
-  searchButton(){
+
+  searchButton() {
     /* beautify ignore:start */
     return (
       <SearchIcon
-        style={{ marginRight: 8}}
         onPress={this.handleSearch.bind(this)}
+        style={{ marginRight: 8 }}
       />
-    )
+    );
     /* beautify ignore:end */
   }
 
   render() {
     /* beautify ignore:start */
-    let showErr = (this.state.error
+    const showErr = (this.state.error
       ? <Text style={styles.error}>{this.state.error}</Text>
-      : <View></View>)
+      : <View/>);
 
     const titleConfig = {
-       title: 'GitHub Viewer',
-       tintColor: '#FFF'
-     };
-     
+      tintColor: '#FFF',
+      title: 'GitHub Viewer'
+    };
+
     const statusBarConfig = {
       hidden: false,
       showAnimation: 'fade',
       hideAnimation: 'fade',
       style: 'light-content'
     };
-    
-    let header = Platform.OS === 'android' ? <Header title='GitHub Viewer'/> : 
+
+    const header = Platform.OS === 'android' ? <Header title='GitHub Viewer'/> :
       <NavigationBar
-          tintColor='#444444'
-          title={titleConfig}
-          statusBar={statusBarConfig}
-          rightButton={this.searchButton()}
-        />;
+        rightButton={this.searchButton()}
+        statusBar={statusBarConfig}
+        tintColor='#444444'
+        title={titleConfig}
+      />;
 
     return (
       <View style={styles.container}>
@@ -116,7 +116,10 @@ class Main extends Component {
             Enter a GitHub User Name
           </Text>
           {this.input()}
-          <TouchableHighlight style={styles.button} onPress={this.handleSubmit.bind(this)} underlayColor='white'>
+          <TouchableHighlight onPress={this.handleSubmit.bind(this)}
+            style={styles.button}
+            underlayColor='white'
+          >
             <Text style={styles.buttonText}>
               GO
             </Text>
@@ -124,10 +127,14 @@ class Main extends Component {
           {showErr}
         </View>
       </View>
-    )
+    );
     /* beautify ignore:end */
   }
 }
+
+Main.propTypes = {
+  navigator: React.PropTypes.object.isRequired
+};
 
 const styles = StyleSheet.create({
   container: {

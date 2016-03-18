@@ -1,24 +1,17 @@
-'use strict';
-
 import React, {
   AppRegistry, Component, StyleSheet, Navigator, View, BackAndroid
 } from 'react-native';
 import Main from './App/Components/Main';
 
-var _navigator;
+let _navigator;
 
 BackAndroid.addEventListener('hardwareBackPress', () => {
-  if (_navigator.getCurrentRoutes().length === 1  ) {
-     return false;
+  if (_navigator.getCurrentRoutes().length === 1) {
+    return false;
   }
   _navigator.pop();
   return true;
 });
-
-function renderScene(route, navigator) {
-  _navigator = navigator;
-  return <route.component {...route.passProps} route={route} navigator={navigator} />;
-}
 
 class GitHub extends Component {
   render() {
@@ -26,13 +19,22 @@ class GitHub extends Component {
     const initialRoute = {
       component: Main
     };
-    
+
     return (
       <View style={styles.container}>
-        <Navigator
-          initialRoute={initialRoute}
-          renderScene={renderScene}/>
-      </View>
+         <Navigator
+           initialRoute={initialRoute}
+           renderScene={(route, navigator) => {
+             _navigator = navigator;
+             return (
+              <route.component navigator={navigator}
+                route={route}
+                {...route.passProps}
+              />
+            );
+           }}
+         />
+       </View>
     );
     /* beautify ignore:end */
   }

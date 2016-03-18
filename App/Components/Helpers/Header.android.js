@@ -4,21 +4,21 @@ import React, {
 
 class Header extends Component {
   render() {
-    /* beautify ignore:start */ 
+    /* beautify ignore:start */
     return (
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>
           {this.props.title}
         </Text>
-      </View> 
-    )
+      </View>
+    );
     /* beautify ignore:end */
   }
-};
+}
 
 Header.propTypes = {
   title: React.PropTypes.string.isRequired
-}
+};
 
 const styles = StyleSheet.create({
   headerContainer: {

@@ -4,31 +4,38 @@ import React, {
 import NavigationBar from 'react-native-navbar';
 import Badge from './Badge';
 import Separator from './Helpers/Separator';
-import Web_View from './WebView';
+import WebViewer from './WebViewer';
 import Header from './Helpers/Header';
 
 class Repositories extends Component {
-  openPage(url){
+  openPage(url) {
     this.props.navigator.push({
-     component: Web_View,
-     passProps: {
-       url: url
-     }
-    })
+      component: WebViewer,
+      passProps: {
+        url
+      }
+    });
   }
-  
+
   render() {
-    /* beautify ignore:start */ 
-    let userInfo = this.props.userInfo;
-    let repos = this.props.repos;
-    let list = repos.map((item, index) => {
-      let desc = repos[index].description ? <Text style={styles.description} numberOfLines={1}> {repos[index].description} </Text> : <View />;
+    /* beautify ignore:start */
+    const userInfo = this.props.userInfo;
+    const repos = this.props.repos;
+    const list = repos.map((item, index) => {
+      const desc = repos[index].description ?
+        <Text
+          numberOfLines={1}
+          style={styles.description}
+        >
+          {repos[index].description}
+        </Text> : <View />;
       return (
         <View key={index}>
           <View style={styles.rowContainer}>
             <TouchableHighlight
               onPress={this.openPage.bind(this, repos[index].html_url)}
-              underlayColor='transparent'>
+              underlayColor='transparent'
+            >
               <Text style={styles.name}> {repos[index].name} </Text>
             </TouchableHighlight>
             <Text style={styles.stars}> Stars: {repos[index].stargazers_count} </Text>
@@ -36,16 +43,16 @@ class Repositories extends Component {
           </View>
           <Separator />
         </View>
-      )
+      );
     });
-    
+
     const titleConfig = {
       title: 'Repos',
       tintColor: '#FFF'
     };
 
     const leftButtonConfig = {
-      title: '< ' + this.props.userInfo.login,
+      title: `< ${this.props.userInfo.login}`,
       tintColor: '#48BBEC',
       handler: () => this.props.navigator.pop(),
     };
@@ -56,32 +63,33 @@ class Repositories extends Component {
       hideAnimation: 'fade',
       style: 'light-content'
     };
-    
-    let header = Platform.OS === 'android' ? <Header title='Repos' /> : 
+
+    const header = Platform.OS === 'android' ? <Header title='Repos' /> :
       <NavigationBar
-          tintColor='#444444'
-          title={titleConfig}
-          leftButton={leftButtonConfig}
-          statusBar={statusBarConfig}
-        />            
-    
+        leftButton={leftButtonConfig}
+        statusBar={statusBarConfig}
+        tintColor='#444444'
+        title={titleConfig}
+      />;
+
     return (
       <View style={styles.container}>
-        {header}         
+        {header}
         <ScrollView style={styles.scrollContainer}>
           <Badge userInfo={userInfo}/>
           {list}
         </ScrollView>
       </View>
-    )
+    );
     /* beautify ignore:end */
   }
-};
+}
 
 Repositories.propTypes = {
-  userInfo: React.PropTypes.object.isRequired,
-  repos: React.PropTypes.array.isRequired
-}
+  navigator: React.PropTypes.object.isRequired,
+  repos: React.PropTypes.array.isRequired,
+  userInfo: React.PropTypes.object.isRequired
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -1,14 +1,9 @@
 'use strict';
 
 import React, {
-  AppRegistry, Component, StyleSheet, Navigator, View, StatusBarIOS
+  AppRegistry, Component, StyleSheet, Navigator, View
 } from 'react-native';
 import Main from './App/Components/Main';
-import Search from './App/Components/Search';
-
-function renderScene(route, navigator) {
-  return <route.component {...route.passProps} route={route} navigator={navigator} />;
-}
 
 class GitHub extends Component {
   render() {
@@ -16,14 +11,20 @@ class GitHub extends Component {
     const initialRoute = {
       component: Main
     };
-    
-    /*StatusBarIOS.setStyle('light-content');*/
 
     return (
       <View style={styles.container}>
          <Navigator
            initialRoute={initialRoute}
-           renderScene={renderScene}/>
+           renderScene={(route, navigator) => {
+             return (
+              <route.component navigator={navigator}
+                route={route}
+                {...route.passProps}
+              />
+            );
+           }}
+         />
        </View>
     );
     /* beautify ignore:end */

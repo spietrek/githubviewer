@@ -1,5 +1,5 @@
 {
-  "name": "GitHub",
+  "name": "GitHubViewer",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -13,6 +13,9 @@
     "react-native-swipeout": "^2.0.12"
   },
   "devDependencies": {
+    "babel-eslint": "^5.0.0",
+    "eslint": "^2.4.0",
+    "eslint-config-airbnb": "^6.1.0",
     "eslint-plugin-react": "^4.1.0"
   }
 }

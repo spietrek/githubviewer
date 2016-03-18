@@ -1,5 +1,5 @@
 import React, {
-  Component, Text, View, StyleSheet, Image, TouchableHighlight, Platform
+  Component, Text, View, StyleSheet, TouchableHighlight, Platform
 } from 'react-native';
 import NavigationBar from 'react-native-navbar';
 import Header from './Helpers/Header';
@@ -11,7 +11,7 @@ import Badge from './Badge';
 
 class Dashboard extends Component {
   makeButton(btn) {
-    let obj = {
+    const obj = {
       justifyContent: 'center',
       height: 90,
       width: 90,
@@ -19,7 +19,7 @@ class Dashboard extends Component {
       marginLeft: 20,
       alignSelf: 'flex-start',
       marginTop: 80
-    }
+    };
 
     if (btn === 0) {
       obj.backgroundColor = '#43bbef';
@@ -39,8 +39,8 @@ class Dashboard extends Component {
       passProps: {
         userInfo: this.props.userInfo
       }
-    })
-  };
+    });
+  }
 
   gotoRepos() {
     Api.getRepos(this.props.userInfo.login)
@@ -54,7 +54,7 @@ class Dashboard extends Component {
           }
         });
       });
-  };
+  }
 
   gotoNotes() {
     Api.getNotes(this.props.userInfo.login)
@@ -69,15 +69,14 @@ class Dashboard extends Component {
           }
         });
       });
-  };
-  
+  }
+
   render() {
     /* beautify ignore:start */
-    let {userInfo} = this.props;
-    let title = userInfo.login;
-    
+    const { userInfo } = this.props;
+    const title = userInfo.login;
     const titleConfig = {
-      title: title,
+      title,
       tintColor: '#FFF'
     };
 
@@ -93,15 +92,15 @@ class Dashboard extends Component {
       hideAnimation: 'fade',
       style: 'light-content'
     };
-    
-    let header = Platform.OS === 'android' ? <Header title={title}/> : 
+
+    const header = Platform.OS === 'android' ? <Header title={title}/> :
       <NavigationBar
-          tintColor='#444444'
-          title={titleConfig}
-          leftButton={leftButtonConfig}
-          statusBar={statusBarConfig}
-        />
-  
+        leftButton={leftButtonConfig}
+        statusBar={statusBarConfig}
+        tintColor='#444444'
+        title={titleConfig}
+      />;
+
     return (
       <View style={styles.container}>
         {header}
@@ -111,7 +110,8 @@ class Dashboard extends Component {
             <TouchableHighlight
               onPress={this.gotoProfile.bind(this)}
               style={this.makeButton(0)}
-              underlayColor='#14aaeb'>
+              underlayColor='#14aaeb'
+            >
               <Text style={styles.buttonText}>
                 Profile
               </Text>
@@ -119,7 +119,8 @@ class Dashboard extends Component {
             <TouchableHighlight
               onPress={this.gotoRepos.bind(this)}
               style={this.makeButton(1)}
-              underlayColor='#e62e00'>
+              underlayColor='#e62e00'
+            >
               <Text style={styles.buttonText}>
                 Repos
               </Text>
@@ -127,7 +128,8 @@ class Dashboard extends Component {
             <TouchableHighlight
               onPress={this.gotoNotes.bind(this)}
               style={this.makeButton(2)}
-              underlayColor='#425ff0'>
+              underlayColor='#425ff0'
+            >
               <Text style={styles.buttonText}>
                 Notes
               </Text>
@@ -141,14 +143,15 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
+  navigator: React.PropTypes.object.isRequired,
   userInfo: React.PropTypes.object.isRequired
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#333333'
-  }, 
+  },
   viewContainer: {
     flex: 1,
     backgroundColor: '#4d4d4d'

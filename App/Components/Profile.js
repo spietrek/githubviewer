@@ -14,11 +14,11 @@ class Profile extends Component {
 
   render() {
     /* beautify ignore:start */
-    let userInfo = this.props.userInfo;
-    let topicArr = ['company', 'location', 'followers', 'following', 'email', 'bio', 'public_repos', 'blog'];
-    let list = topicArr.map((item, index) => {
-      if(!userInfo[item]){
-        return <View key={index}/>
+    const userInfo = this.props.userInfo;
+    const topicArr = ['company', 'location', 'followers', 'following', 'email', 'bio', 'public_repos', 'blog'];
+    const list = topicArr.map((item, index) => {
+      if (!userInfo[item]) {
+        return <View key={index}/>;
       } else {
         return (
           <View key={index}>
@@ -28,17 +28,17 @@ class Profile extends Component {
             </View>
             <Separator />
          </View>
-        )
+        );
       }
     });
-    
+
     const titleConfig = {
       title: 'Profile',
       tintColor: '#FFF'
     };
 
     const leftButtonConfig = {
-      title: '< ' + this.props.userInfo.login,
+      title: `< ${this.props.userInfo.login}`,
       tintColor: '#48BBEC',
       handler: () => this.props.navigator.pop(),
     };
@@ -50,14 +50,14 @@ class Profile extends Component {
       style: 'light-content'
     };
 
-    let header = Platform.OS === 'android' ? <Header title='Profile' /> : 
+    const header = Platform.OS === 'android' ? <Header title='Profile' /> :
       <NavigationBar
-          tintColor='#444444'
-          title={titleConfig}
-          leftButton={leftButtonConfig}
-          statusBar={statusBarConfig}
-        />    
-   
+        leftButton={leftButtonConfig}
+        statusBar={statusBarConfig}
+        tintColor='#444444'
+        title={titleConfig}
+      />;
+
     return (
       <View style={styles.container}>
         {header}
@@ -66,14 +66,15 @@ class Profile extends Component {
           {list}
         </ScrollView>
       </View>
-    )
+    );
     /* beautify ignore:end */
   }
-};
+}
 
 Profile.propTypes = {
+  navigator: React.PropTypes.object.isRequired,
   userInfo: React.PropTypes.object.isRequired
-}
+};
 
 const styles = StyleSheet.create({
   container: {

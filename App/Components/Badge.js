@@ -1,5 +1,5 @@
 import React, {
-  Component, Text, View, StyleSheet, Image, TouchableHighlight
+  Component, Text, View, StyleSheet, Image
 } from 'react-native';
 
 class Badge extends Component {
@@ -7,9 +7,9 @@ class Badge extends Component {
     /* beautify ignore:start */
     return (
       <View style={styles.container}>
-        <Image style={styles.image} source={{
-          uri: this.props.userInfo.avatar_url
-        }}/>
+        <Image source={{ uri: this.props.userInfo.avatar_url }}
+          style={styles.image}
+        />
         <Text style={styles.name}>
           {this.props.userInfo.name}
         </Text>
@@ -17,14 +17,14 @@ class Badge extends Component {
           {this.props.userInfo.login}
         </Text>
       </View>
-    )
+    );
     /* beautify ignore:end */
   }
-};
+}
 
 Badge.propTypes = {
   userInfo: React.PropTypes.object.isRequired
-}
+};
 
 const styles = StyleSheet.create({
   container: {

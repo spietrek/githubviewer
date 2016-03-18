@@ -4,14 +4,13 @@ import React, {
 
 class Seperator extends Component {
   render() {
-   /* beautify ignore:start */ 
-   return (
-       <View style={styles.separator}>
-      </View>
-    )
-   /* beautify ignore:end */
+    /* beautify ignore:start */
+    return (
+      <View style={styles.separator} />
+    );
+    /* beautify ignore:end */
   }
-};
+}
 
 const styles = StyleSheet.create({
   separator: {

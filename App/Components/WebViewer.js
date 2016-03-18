@@ -4,7 +4,7 @@ import React, {
 import NavigationBar from 'react-native-navbar';
 import Header from './Helpers/Header';
 
-class Web extends Component {
+class WebViewer extends Component {
   render() {
     /* beautify ignore:start */
     const titleConfig = {
@@ -24,29 +24,30 @@ class Web extends Component {
       hideAnimation: 'fade',
       style: 'light-content'
     };
-    
-    let header = Platform.OS === 'android' ? <Header title='Repo' /> : 
+
+    const header = Platform.OS === 'android' ? <Header title='Repo' /> :
       <NavigationBar
-          tintColor='#444444'
-          title={titleConfig}
-          leftButton={leftButtonConfig}
-          statusBar={statusBarConfig}
-        />    
-        
+        leftButton={leftButtonConfig}
+        statusBar={statusBarConfig}
+        tintColor='#444444'
+        title={titleConfig}
+      />;
+
     return (
       <View style={styles.container}>
-        {header}       
+        {header}
         <View style={styles.viewContainer}>
-          <WebView source={{uri: this.props.url}}/>
+          <WebView source={{ uri: this.props.url }}/>
         </View>
       </View>
-    )
-   /* beautify ignore:end */
+    );
+    /* beautify ignore:end */
   }
-};
+}
 
-Web.propTypes = {
- url: React.PropTypes.string.isRequired
+WebViewer.propTypes = {
+  navigator: React.PropTypes.object.isRequired,
+  url: React.PropTypes.string.isRequired
 };
 
 const styles = StyleSheet.create({
@@ -61,4 +62,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = Web;
+module.exports = WebViewer;

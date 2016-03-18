@@ -1,21 +1,20 @@
 import React, {
-  Component, View, Text, StyleSheet
+  Component, View, StyleSheet
 } from 'react-native';
 
 class Header extends Component {
   render() {
-    /* beautify ignore:start */ 
+    /* beautify ignore:start */
     return (
-      <View style={styles.container}>
-      </View> 
-    )
+      <View style={styles.container} />
+    );
     /* beautify ignore:end */
   }
-};
+}
 
 Header.propTypes = {
   title: React.PropTypes.string.isRequired
-}
+};
 
 const styles = StyleSheet.create({
   container: {

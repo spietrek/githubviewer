@@ -14,9 +14,9 @@ class Search extends Component {
       users: [],
       searchText: '',
       error: false
-    }
+    };
   }
-  
+
   handleSearch(search) {
     this.refs.searchBar.blur();
     this.setState({
@@ -28,24 +28,24 @@ class Search extends Component {
         .then((data) => {
           this.setState({
             users: data.items
-          })
+          });
         })
         .catch((error) => {
           console.log('Search request failed', error);
           this.setState({
             error,
             users: []
-          })
+          });
         });
     }
- }
- 
- handleCancel() {
-   this.refs.searchBar.blur();
-   this.refs.searchBar.showsCancelButton = false;
- }
- 
- openUser(userInfo){
+  }
+
+  handleCancel() {
+    this.refs.searchBar.blur();
+    this.refs.searchBar.showsCancelButton = false;
+  }
+
+  openUser(userInfo) {
     Api.getBio(userInfo.login).then((res) => {
       this.props.navigator.push({
         title: res.name || res.login,
@@ -54,12 +54,12 @@ class Search extends Component {
           userInfo: res
         }
       });
-    })   
+    });
   }
-  
+
   render() {
-    /* beautify ignore:start */ 
-    const titleConfig = {
+    /* beautify ignore:start */
+    let titleConfig = {
       title: 'Search',
       tintColor: '#FFF'
     };
@@ -76,8 +76,8 @@ class Search extends Component {
       hideAnimation: 'fade',
       style: 'light-content'
     };
-    
-    let users = this.state.users;
+
+    const users = this.state.users;
     let list = [];
     if (users) {
       list = users.map((item, index) => {
@@ -85,41 +85,52 @@ class Search extends Component {
           <View key={index}>
             <TouchableHighlight
               onPress={this.openUser.bind(this, item)}
-              underlayColor='transparent'>
+              underlayColor='transparent'
+            >
               <View style={styles.rowContainer}>
-                <Image style={styles.image} source={{ uri: item.avatar_url }}/>
+                <Image
+                  source={{ uri: item.avatar_url }}
+                  style={styles.image}
+                />
                 <Text style={styles.name}> {item.login} </Text>
               </View>
             </TouchableHighlight>
             <Separator />
           </View>
-        )
+        );
       });
     }
 
     return (
       <View style={styles.container}>
         <NavigationBar
-          tintColor='#444444'
-          title={titleConfig}
           leftButton={leftButtonConfig}
           statusBar={statusBarConfig}
-        />     
-        <ScrollView style={styles.scrollContainer} keyboardDismissMode='on-drag'>
+          tintColor='#444444'
+          title={titleConfig}
+        />
+        <ScrollView
+          keyboardDismissMode='on-drag'
+          style={styles.scrollContainer}
+        >
           <SearchBar
-            ref='searchBar'
-            placeholder='Search'
-            onCancelButtonPress={() => this.setState({showsCancelButton: false})}
-            onFocus={() => this.setState({showsCancelButton: true})}
-            showsCancelButton={this.state.showsCancelButton} 
+            onCancelButtonPress={() => this.setState({ showsCancelButton: false })}
+            onFocus={() => this.setState({ showsCancelButton: true })}
             onSearchButtonPress={this.handleSearch.bind(this)}
+            placeholder='Search'
+            ref='searchBar'
+            showsCancelButton={this.state.showsCancelButton}
           />
           {list}
         </ScrollView>
       </View>
-    )
+    );
     /* beautify ignore:end */
   }
+}
+
+Search.propTypes = {
+  navigator: React.PropTypes.object.isRequired
 };
 
 const styles = StyleSheet.create({
