@@ -59,7 +59,7 @@ class Search extends Component {
 
   render() {
     /* beautify ignore:start */
-    let titleConfig = {
+    const titleConfig = {
       title: 'Search',
       tintColor: '#FFF'
     };
@@ -93,6 +93,7 @@ class Search extends Component {
                   style={styles.image}
                 />
                 <Text style={styles.name}> {item.login} </Text>
+                <Text style={styles.drill}> > </Text>
               </View>
             </TouchableHighlight>
             <Separator />
@@ -149,12 +150,18 @@ const styles = StyleSheet.create({
   name: {
     color: '#48BBEC',
     fontSize: 18,
-    paddingTop: 3
+    paddingTop: 3,
+    flex: 3
   },
   image: {
     height: 30,
     width: 30,
     borderRadius: 4
+  },
+  drill: {
+    fontSize: 18,
+    color: '#CCCCCC',
+    width: 20
   }
 });
 

@@ -30,16 +30,19 @@ class Repositories extends Component {
         </Text> : <View />;
       return (
         <View key={index}>
-          <View style={styles.rowContainer}>
-            <TouchableHighlight
-              onPress={this.openPage.bind(this, repos[index].html_url)}
-              underlayColor='transparent'
-            >
-              <Text style={styles.name}> {repos[index].name} </Text>
-            </TouchableHighlight>
-            <Text style={styles.stars}> Stars: {repos[index].stargazers_count} </Text>
-            {desc}
-          </View>
+          <TouchableHighlight
+            onPress={this.openPage.bind(this, repos[index].html_url)}
+            underlayColor='transparent'
+          >
+            <View style={styles.rowContainer}>
+              <View style={styles.columnContainer}>
+                <Text style={styles.name}> {repos[index].name} </Text>
+                <Text style={styles.stars}> Stars: {repos[index].stargazers_count} </Text>
+                {desc}
+              </View>
+              <Text style={styles.drill}> > </Text>
+            </View>
+          </TouchableHighlight>
           <Separator />
         </View>
       );
@@ -99,8 +102,13 @@ const styles = StyleSheet.create({
     flex: 1
   },
   rowContainer: {
+    flexDirection: 'row',
+    flex: 2,
+    alignItems: 'center'
+  },
+  columnContainer: {
     flexDirection: 'column',
-    flex: 1,
+    flex: 3,
     padding: 10
   },
   name: {
@@ -119,6 +127,12 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     marginLeft: 6,
     marginRight: 6
+  },
+  drill: {
+    fontSize: 18,
+    color: '#CCCCCC',
+    width: 20,
+    marginRight: 5
   }
 });
 
