@@ -172,4 +172,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = Dashboard;
+export default Dashboard;

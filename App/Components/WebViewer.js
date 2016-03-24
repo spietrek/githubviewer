@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = WebViewer;
+export default WebViewer;

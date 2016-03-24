@@ -136,4 +136,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = Repositories;
+export default Repositories;

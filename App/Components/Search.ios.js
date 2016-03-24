@@ -8,8 +8,8 @@ import Separator from './Helpers/Separator';
 import Dashboard from './Dashboard';
 
 class Search extends Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       users: [],
       searchText: '',
@@ -165,4 +165,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = Search;
+export default Search;

@@ -21,4 +21,4 @@ SearchIcon.propTypes = {
   onPress: React.PropTypes.func.isRequired
 };
 
-module.exports = SearchIcon;
+export default SearchIcon;

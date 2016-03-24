@@ -9,8 +9,8 @@ import Search from './Search';
 import SearchIcon from './Helpers/SearchIcon';
 
 class Main extends Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       username: '',
       isLoading: false,
@@ -188,4 +188,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = Main;
+export default Main;

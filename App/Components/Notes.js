@@ -9,13 +9,13 @@ import Header from './Helpers/Header';
 import Swipeout from 'react-native-swipeout';
 
 class Notes extends Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     const ds = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2
     });
     this.state = {
-      dataSource: ds.cloneWithRows(this.props.notes),
+      dataSource: ds.cloneWithRows(props.notes),
       note: '',
       error: ''
     };
@@ -242,4 +242,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = Notes;
+export default Notes;

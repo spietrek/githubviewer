@@ -52,4 +52,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = Badge;
+export default Badge;

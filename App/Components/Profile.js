@@ -102,4 +102,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = Profile;
+export default Profile;
