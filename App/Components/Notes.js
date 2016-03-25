@@ -1,5 +1,13 @@
 import React, {
-  Component, View, Text, TextInput, ListView, TouchableHighlight, StyleSheet, Alert, Platform
+  Component,
+  View,
+  Text,
+  TextInput,
+  ListView,
+  TouchableHighlight,
+  StyleSheet,
+  Alert,
+  Platform
 } from 'react-native';
 import NavigationBar from 'react-native-navbar';
 import Badge from './Badge';
@@ -9,13 +17,13 @@ import Header from './Helpers/Header';
 import Swipeout from 'react-native-swipeout';
 
 class Notes extends Component {
-  constructor(props, context) {
-    super(props, context);
-    const ds = new ListView.DataSource({
+  constructor(props) {
+    super(props);
+    this.ds = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2
     });
     this.state = {
-      dataSource: ds.cloneWithRows(props.notes),
+      dataSource: this.ds.cloneWithRows(this.props.notes),
       note: '',
       error: ''
     };
@@ -44,7 +52,9 @@ class Notes extends Component {
       })
       .catch((error) => {
         console.log('Post request failed', error);
-        this.setState({ error });
+        this.setState({
+          error
+        });
       });
   }
 
@@ -60,18 +70,21 @@ class Notes extends Component {
       })
       .catch((error) => {
         console.log('Delete request failed', error);
-        this.setState({ error });
+        this.setState({
+          error
+        });
       });
   }
 
   deleteRow(rowID, userInfo) {
     Alert.alert(
       'Delete Note',
-      'Are you sure you want to delete this note?',
-      [
-        { text: 'Delete', onPress: () => this.deleteNote(rowID, userInfo) },
-        { text: 'Cancel' }
-      ]
+      'Are you sure you want to delete this note?', [{
+        text: 'Delete',
+        onPress: () => this.deleteNote(rowID, userInfo)
+      }, {
+        text: 'Cancel'
+      }]
     );
   }
 
